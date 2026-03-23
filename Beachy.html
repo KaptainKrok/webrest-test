@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warner Norton Grange</title>
+  <style>
+    :root{
+      --bg1:#fdf8ef;
+      --bg2:#eaf7f6;
+      --bg3:#dff2ff;
+      --text:#2e3a46;
+      --muted:#5f6f7c;
+      --accent:#1fa6b8;
+      --accent2:#4ec9b0;
+      --accent3:#7fd6ff;
+      --sand:#fff7ea;
+      --card:#fffdf8;
+      --shadow:0 16px 40px rgba(74, 107, 122, 0.12);
+      --radius:24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(127,214,255,0.22), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(78,201,176,0.18), transparent 28%),
+        linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 52%, var(--bg3) 100%);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 18px;
+      width: 100%;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero > * {
+      min-width: 0;
+    }
+
+    .panel {
+      background: rgba(255, 252, 246, 0.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .content {
+      padding: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,250,242,0.88));
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2rem, 3.8vw, 3.15rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      background: linear-gradient(90deg, #265b89 0%, #1fa6b8 45%, #4ec9b0 75%, #7fd6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lead {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0 18px;
+    }
+
+    .stat {
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #fffefb, #fdf8ef);
+      border: 1px solid rgba(31,166,184,0.10);
+      border-radius: 18px;
+      min-width: 130px;
+      flex: 1 1 130px;
+      box-shadow: 0 6px 16px rgba(74,107,122,0.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 5px;
+      color: #243544;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .facilities-card {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,253,248,0.95), rgba(244,251,250,0.95));
+      border: 1px solid rgba(31,166,184,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .facilities-card h2 {
+      margin: 0 0 16px;
+      font-size: 1.95rem;
+      line-height: 1.1;
+      color: #223243;
+    }
+
+    .facilities {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 12px;
+    }
+
+    .facilities li {
+      position: relative;
+      padding: 14px 14px 14px 46px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.88);
+      color: #31414e;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid rgba(127,214,255,0.15);
+    }
+
+    .facilities li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(31,166,184,0.10);
+    }
+
+    .facilities li::before {
+      content: "✓";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      font-size: 13px;
+      line-height: 24px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(31,166,184,0.2);
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff4df, #ffefdb);
+      color: #7d5a28;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border: 1px solid rgba(228, 192, 134, 0.45);
+    }
+
+    .gallery {
+      position: relative;
+      overflow: hidden;
+      min-height: 680px;
+      background: #d8eef7;
+    }
+
+    .gallery-inner {
+      position: relative;
+      min-height: 680px;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 0.8s ease, transform 1.2s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(13, 37, 53, 0.42), rgba(13, 37, 53, 0.08) 45%, rgba(13, 37, 53, 0.02));
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .floating-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 6;
+      padding: 12px 16px;
+      border-radius: 18px;
+      color: white;
+      background: rgba(34, 66, 86, 0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .floating-badge strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .floating-badge span {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .dots {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 96px;
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.48);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    }
+
+    .dot.active {
+      background: #fff6e7;
+      transform: scale(1.18);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 14px;
+      pointer-events: none;
+    }
+
+    .gallery-caption > * {
+      pointer-events: auto;
+    }
+
+    .gallery-caption h3 {
+      margin: 0 0 6px;
+      font-size: 1.65rem;
+      text-shadow: 0 3px 16px rgba(0,0,0,0.22);
+    }
+
+    .gallery-caption p {
+      margin: 0;
+      color: rgba(255,255,255,0.94);
+      max-width: 470px;
+      line-height: 1.45;
+      font-size: 0.98rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    }
+
+    .gallery-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+      z-index: 11;
+    }
+
+    .arrow-btn {
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 246, 231, 0.22);
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      position: relative;
+      z-index: 12;
+      pointer-events: auto;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    }
+
+    .arrow-btn:hover {
+      transform: scale(1.05);
+      background: rgba(255, 246, 231, 0.34);
+    }
+
+    @media (max-width: 1100px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery,
+      .gallery-inner {
+        min-height: 500px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding: 12px;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .facilities {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery,
+      .gallery-inner {
+        min-height: 390px;
+      }
+
+      .gallery-caption {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .dots {
+        bottom: 124px;
+      }
+
+      .gallery-caption h3 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="panel content">
+        <h1>Coastal Village on the Isle of Wight</h1>
+
+        <p class="lead">
+          Literally yards away from the Solent, the views and coastal walks are spectacular. The Waterfront Lounge and Terrace is the perfect spot to soak up the sun and watch the world sail by.
+        </p>
+
+        <p class="lead">
+          Try your hand on the pitch and putt course, head to the indoor games room with snooker and table tennis, or give archery and rifle shooting a go.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>Heated Pool</strong>
+            <span>Indoor relaxation all year round</span>
+          </div>
+          <div class="stat">
+            <strong>Seaside Views</strong>
+            <span>Moments from the waterfront</span>
+          </div>
+          <div class="stat">
+            <strong>Leisure Activities</strong>
+            <span>Fitness, archery and more</span>
+          </div>
+        </div>
+
+        <div class="facilities-card">
+          <h2>Facilities include</h2>
+          <ul class="facilities">
+            <li>Heated Indoor Pool</li>
+            <li>Sauna & Gym</li>
+            <li>Air Rifle Shooting and Archery</li>
+            <li>Pitch & Putt and fun Croquet</li>
+            <li>Fitness Classes</li>
+            <li>Free WiFi in public areas</li>
+          </ul>
+
+          <div class="note">
+            Please note: All purchases at the hotel are card only, no cash is accepted. Some resort activities may be chargeable, and guests will need to pay for them directly at the resort.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel gallery">
+        <div class="gallery-inner">
+          <div class="floating-badge">
+            <strong>Featured Stay</strong>
+            <span>Modern rooms, dining, entertainment and leisure</span>
+          </div>
+
+          <div class="slide active" data-title="Norton Grange Exterior" data-text="A welcoming coastal setting just moments from the Solent and scenic shoreline walks.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_exterior2.jpg" alt="Norton Grange exterior" />
+          </div>
+
+          <div class="slide" data-title="Dining at Norton Grange" data-text="Enjoy relaxed dining spaces and a comfortable atmosphere throughout your stay.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_dining.jpg" alt="Norton Grange dining" />
+          </div>
+
+          <div class="slide" data-title="Entertainment Evenings" data-text="Live entertainment and social spaces help make every evening feel special.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_ents2.jpg" alt="Norton Grange entertainment" />
+          </div>
+
+          <div class="slide" data-title="More Entertainment" data-text="Enjoy lively nights and memorable moments in the heart of the resort.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_ents1.jpg" alt="Norton Grange entertainment venue" />
+          </div>
+
+          <div class="slide" data-title="Comfortable Rooms" data-text="Relax in bright, comfortable accommodation designed for a refreshing coastal break.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_room.jpg" alt="Norton Grange room" />
+          </div>
+
+          <div class="slide" data-title="Indoor Pool" data-text="Take a dip and unwind with indoor leisure facilities available on site.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_pool.jpg" alt="Norton Grange pool" />
+          </div>
+
+          <div class="slide" data-title="Coastal Exterior" data-text="Another view of the resort exterior and its attractive coastal surroundings.">
+            <img src="https://www.majestictours.co.uk/images/hotels/norton_exterior.jpg" alt="Norton Grange exterior view" />
+          </div>
+
+          <div class="overlay-gradient"></div>
+          <div class="dots" id="dots"></div>
+
+          <div class="gallery-caption">
+            <div>
+              <h3 id="captionTitle">Norton Grange Exterior</h3>
+              <p id="captionText">A welcoming coastal setting just moments from the Solent and scenic shoreline walks.</p>
+            </div>
+            <div class="gallery-controls">
+              <button type="button" class="arrow-btn" id="prevBtn" aria-label="Previous slide">←</button>
+              <button type="button" class="arrow-btn" id="nextBtn" aria-label="Next slide">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const titleEl = document.getElementById('captionTitle');
+    const textEl = document.getElementById('captionText');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let current = 0;
+    let autoRotate = null;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', function () {
+        showSlide(i);
+        restartAuto();
+      });
+      dotsWrap.appendChild(dot);
+    });
+
+    function getDots() {
+      return Array.from(document.querySelectorAll('.dot'));
+    }
+
+    function showSlide(index) {
+      const dots = getDots();
+
+      slides[current].classList.remove('active');
+      if (dots[current]) dots[current].classList.remove('active');
+
+      current = (index + slides.length) % slides.length;
+
+      slides[current].classList.add('active');
+      if (dots[current]) dots[current].classList.add('active');
+
+      titleEl.textContent = slides[current].dataset.title || '';
+      textEl.textContent = slides[current].dataset.text || '';
+    }
+
+    function nextSlide() {
+      showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      showSlide(current - 1);
+    }
+
+    function startAuto() {
+      autoRotate = setInterval(nextSlide, 5000);
+    }
+
+    function restartAuto() {
+      clearInterval(autoRotate);
+      startAuto();
+    }
+
+    prevBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      prevSlide();
+      restartAuto();
+    });
+
+    nextBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      nextSlide();
+      restartAuto();
+    });
+
+    startAuto();
+  </script>
+</body>
+</html>
