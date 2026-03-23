@@ -1,38 +1,372 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<style>
-  body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: transparent;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Epic JavaScript Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  #text {
-    font-size: 36px;
-    font-weight: bold;
-    transition: color 1s ease;
-  }
-</style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+      background: linear-gradient(-45deg, #1a1a40, #3a0ca3, #4361ee, #7209b7);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+    }
+
+    .panel {
+      width: min(1000px, 95%);
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      text-align: center;
+      transition: color 1s ease;
+    }
+
+    .sub {
+      text-align: center;
+      opacity: 0.9;
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 150px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    button {
+      background: white;
+      color: black;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 10px;
+      min-height: 48px;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 20px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f5d4, #00bbf9, #9b5de5);
+      transition: width 0.2s linear;
+    }
+
+    .box-area {
+      position: relative;
+      height: 120px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .box {
+      width: 40px;
+      height: 40px;
+      background: #ffd166;
+      position: absolute;
+      border-radius: 10px;
+      left: 10px;
+      top: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .light-mode {
+      color: #111;
+      background: linear-gradient(-45deg, #f8edeb, #fad2e1, #cddafd, #d8f3dc);
+      background-size: 400% 400%;
+    }
+
+    .light-mode .panel {
+      background: rgba(255,255,255,0.55);
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    .light-mode .card {
+      background: rgba(255,255,255,0.5);
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    .light-mode button {
+      background: #111;
+      color: white;
+    }
+  </style>
 </head>
-
 <body>
+  <canvas id="particleCanvas"></canvas>
 
-<p id="text">Hello!</p>
+  <div class="overlay">
+    <div class="panel">
+      <h1 id="headline">Epic JavaScript Demo</h1>
+      <div class="sub">A single embedded page showing off multiple JavaScript features.</div>
 
-<script>
-const colors = ["red", "blue", "green", "purple", "orange"];
-let i = 0;
+      <div class="grid">
+        <div class="card">
+          <h2>Live Clock</h2>
+          <div id="clock">--:--:--</div>
+        </div>
 
-setInterval(() => {
-  i = (i + 1) % colors.length;
-  document.getElementById("text").style.color = colors[i];
-}, 5000);
-</script>
+        <div class="card">
+          <h2>Click Counter</h2>
+          <div>Clicks: <span id="clickCount">0</span></div>
+          <button id="countBtn">Click me</button>
+        </div>
 
+        <div class="card">
+          <h2>Random Quote</h2>
+          <div class="quote" id="quoteBox">Press the button for a quote.</div>
+          <button id="quoteBtn">New quote</button>
+        </div>
+
+        <div class="card">
+          <h2>Mouse Tracker</h2>
+          <div id="mousePos">X: 0, Y: 0</div>
+        </div>
+
+        <div class="card">
+          <h2>Animated Progress</h2>
+          <div>Loading demo...</div>
+          <div class="progress-wrap">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div id="progressText">0%</div>
+        </div>
+
+        <div class="card">
+          <h2>Theme Toggle</h2>
+          <div id="themeStatus">Current theme: Dark</div>
+          <button id="themeBtn">Toggle theme</button>
+        </div>
+
+        <div class="card">
+          <h2>Bouncing Box</h2>
+          <div class="box-area">
+            <div class="box" id="bounceBox"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Typing Effect</h2>
+          <div id="typingText"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        If this runs inside your iframe, your external embed setup is working perfectly.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const headline = document.getElementById("headline");
+    const headlineColors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0", "#c77dff"];
+    let headlineIndex = 0;
+    setInterval(() => {
+      headlineIndex = (headlineIndex + 1) % headlineColors.length;
+      headline.style.color = headlineColors[headlineIndex];
+    }, 2000);
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent = now.toLocaleTimeString();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    let clickCount = 0;
+    document.getElementById("countBtn").addEventListener("click", () => {
+      clickCount++;
+      document.getElementById("clickCount").textContent = clickCount;
+    });
+
+    const quotes = [
+      "JavaScript makes static pages come alive.",
+      "Small widgets can massively improve a website.",
+      "If it works in an iframe, it works in WebRes.",
+      "Prototype fast, then polish.",
+      "Front-end magic is mostly persistence."
+    ];
+    document.getElementById("quoteBtn").addEventListener("click", () => {
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quoteBox").textContent = random;
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      document.getElementById("mousePos").textContent = `X: ${e.clientX}, Y: ${e.clientY}`;
+    });
+
+    let progress = 0;
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    setInterval(() => {
+      progress += 1;
+      if (progress > 100) progress = 0;
+      progressBar.style.width = progress + "%";
+      progressText.textContent = progress + "%";
+    }, 80);
+
+    const themeBtn = document.getElementById("themeBtn");
+    const themeStatus = document.getElementById("themeStatus");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      themeStatus.textContent = document.body.classList.contains("light-mode")
+        ? "Current theme: Light"
+        : "Current theme: Dark";
+    });
+
+    const box = document.getElementById("bounceBox");
+    let x = 10, y = 10, dx = 2.5, dy = 2;
+    const areaWidth = 230;
+    const areaHeight = 120;
+    const boxSize = 40;
+
+    function animateBox() {
+      x += dx;
+      y += dy;
+
+      if (x <= 0 || x + boxSize >= areaWidth) dx *= -1;
+      if (y <= 0 || y + boxSize >= areaHeight) dy *= -1;
+
+      box.style.left = x + "px";
+      box.style.top = y + "px";
+
+      requestAnimationFrame(animateBox);
+    }
+    animateBox();
+
+    const typingTarget = document.getElementById("typingText");
+    const typingMessage = "This text is being typed out with JavaScript.";
+    let typingIndex = 0;
+    function typeNext() {
+      if (typingIndex < typingMessage.length) {
+        typingTarget.textContent += typingMessage.charAt(typingIndex);
+        typingIndex++;
+        setTimeout(typeNext, 50);
+      }
+    }
+    typeNext();
+
+    const canvas = document.getElementById("particleCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 3 + 1,
+          dx: (Math.random() - 0.5) * 1.2,
+          dy: (Math.random() - 0.5) * 1.2
+        });
+      }
+    }
+    createParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles) {
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
+        ctx.fill();
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
 </body>
 </html>
