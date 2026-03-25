@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's On</title>
+  <style>
+    :root{
+      --sky-1:#fdfdfd;
+      --sky-2:#eef9ff;
+      --sea-1:#dff5ff;
+      --sea-2:#c8efff;
+      --sun:#ffd36e;
+      --sand:#fff4df;
+      --sand-2:#f7e5bf;
+      --accent:#2f74d8;
+      --accent-2:#1fb7c9;
+      --accent-3:#4fd2c2;
+      --text:#1f2b38;
+      --muted:#627384;
+      --border:#e4edf4;
+      --shadow:0 18px 40px rgba(24, 61, 96, 0.10);
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(255, 211, 110, 0.25), transparent 20%),
+        radial-gradient(circle at top left, rgba(79, 210, 194, 0.12), transparent 22%),
+        linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 48%, #ffffff 100%);
+      min-height: 100%;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fcff 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 28px 28px 22px;
+      margin-bottom: 22px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% 0 -10%;
+      height: 90px;
+      background:
+        radial-gradient(24px 12px at 24px 18px, rgba(47, 116, 216, 0.18) 98%, transparent 100%) 0 0 / 72px 22px repeat-x,
+        radial-gradient(24px 12px at 56px 8px, rgba(31, 183, 201, 0.16) 98%, transparent 100%) 0 0 / 72px 22px repeat-x,
+        linear-gradient(180deg, rgba(223,245,255,0), rgba(200,239,255,0.85));
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 26px;
+      top: 22px;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff6c9 0%, var(--sun) 55%, #ffc955 100%);
+      box-shadow: 0 0 0 14px rgba(255, 211, 110, 0.14);
+      opacity: 0.95;
+    }
+
+    .hero-topline {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 14px;
+      background: linear-gradient(180deg, #eef8ff, #f7fcff);
+      border: 1px solid #dbeaf3;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #2b5578;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-topline .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      box-shadow: 0 0 0 6px rgba(47, 116, 216, 0.08);
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(2.1rem, 4vw, 3.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      background: linear-gradient(90deg, #1d3146 0%, var(--accent) 40%, var(--accent-2) 75%, var(--accent-3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 12px 26px rgba(24, 61, 96, 0.06);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #223548;
+      letter-spacing: -0.02em;
+    }
+
+    .month-select {
+      appearance: none;
+      border: 1px solid #d7e6ef;
+      background: #ffffff;
+      color: #28465f;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      min-width: 170px;
+    }
+
+    .calendar-wrap {
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.6), rgba(247,252,255,0.8));
+    }
+
+    .month-label {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      color: #678;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .weekday {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #6f8191;
+      font-weight: bold;
+      padding: 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .day-card {
+      min-height: 88px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .day-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 24px rgba(47, 116, 216, 0.10);
+      border-color: #d7e7f1;
+    }
+
+    .day-card.empty {
+      cursor: default;
+      background: linear-gradient(180deg, #fbfdff 0%, #f8fbfd 100%);
+      opacity: 0.55;
+    }
+
+    .day-card.empty:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--border);
+    }
+
+    .day-card.has-events::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    }
+
+    .day-card.selected {
+      border-color: #c7dfec;
+      box-shadow: 0 16px 28px rgba(31, 183, 201, 0.14);
+      transform: translateY(-3px);
+      background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    }
+
+    .day-number {
+      font-weight: bold;
+      font-size: 1.05rem;
+      color: #21384d;
+    }
+
+    .day-tag {
+      display: inline-block;
+      font-size: 0.74rem;
+      line-height: 1;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: #eef8ff;
+      color: #2f5f88;
+      width: fit-content;
+      border: 1px solid #d7ebf6;
+    }
+
+    .day-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: auto;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .details-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 540px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 211, 110, 0.12), transparent 18%),
+        linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+
+    .selected-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      width: fit-content;
+      border: 1px solid #dceaf3;
+      background: #f3fbff;
+      color: #2e5b80;
+      font-weight: bold;
+    }
+
+    .selected-date .sun {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff7d6 0%, var(--sun) 55%, #ffc955 100%);
+      box-shadow: 0 0 0 6px rgba(255, 211, 110, 0.14);
+    }
+
+    .details h3 {
+      margin: 0;
+      font-size: 1.85rem;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #203346;
+    }
+
+    .details-intro {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+      max-width: 540px;
+    }
+
+    .events-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .event-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      box-shadow: 0 8px 18px rgba(24, 61, 96, 0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(47, 116, 216, 0.08);
+    }
+
+    .event-time {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #eef8ff, #f8fcff);
+      border: 1px solid #dceaf3;
+      color: #2f5f88;
+      font-size: 0.78rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .event-title {
+      margin: 0 0 6px;
+      color: #21384d;
+      font-size: 1.05rem;
+    }
+
+    .event-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+      font-size: 0.95rem;
+    }
+
+    .empty-state {
+      margin-top: auto;
+      border: 1px dashed #d8e6ef;
+      border-radius: 20px;
+      padding: 22px;
+      background: linear-gradient(180deg, #fcfeff 0%, #f7fbfd 100%);
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .footer-wave {
+      margin-top: auto;
+      height: 56px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid #dceaf2;
+      background: linear-gradient(180deg, #eef9ff 0%, #d8f0fb 100%);
+    }
+
+    .footer-wave .deep,
+    .footer-wave .mid,
+    .footer-wave .front {
+      position: absolute;
+      left: -10%;
+      width: 130%;
+      background-repeat: repeat-x;
+    }
+
+    .footer-wave .deep {
+      bottom: 18px;
+      height: 16px;
+      background-image:
+        radial-gradient(circle at 14px 8px, rgba(59, 142, 214, 0.22) 0 3px, transparent 3px);
+      background-size: 48px 16px;
+      animation: driftDeep 10s linear infinite;
+    }
+
+    .footer-wave .mid {
+      bottom: 10px;
+      height: 12px;
+      background-image:
+        radial-gradient(circle at 10px 6px, rgba(31, 183, 201, 0.28) 0 3px, transparent 3px);
+      background-size: 34px 12px;
+      animation: driftMid 7s linear infinite;
+    }
+
+    .footer-wave .front {
+      bottom: 5px;
+      height: 10px;
+      background-image:
+        radial-gradient(circle at 8px 5px, rgba(255,255,255,0.95) 0 3px, transparent 3px);
+      background-size: 24px 10px;
+      animation: driftFront 4s linear infinite;
+    }
+
+    .footer-wave .sand {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 10px;
+      background: linear-gradient(#f4d8a5, #e9c48a);
+      border-top: 1px solid rgba(198, 160, 105, 0.25);
+    }
+
+    @keyframes driftDeep {
+      from { transform: translateX(0); }
+      to { transform: translateX(80px); }
+    }
+
+    @keyframes driftMid {
+      from { transform: translateX(0); }
+      to { transform: translateX(56px); }
+    }
+
+    @keyframes driftFront {
+      from { transform: translateX(0); }
+      to { transform: translateX(36px); }
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .details-body {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero {
+        padding: 20px 18px 16px;
+      }
+
+      .panel-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .month-select {
+        width: 100%;
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(7, minmax(42px, 1fr));
+        gap: 8px;
+      }
+
+      .day-card {
+        min-height: 76px;
+        border-radius: 14px;
+        padding: 8px;
+      }
+
+      .day-tag {
+        font-size: 0.68rem;
+        padding: 5px 7px;
+      }
+
+      .details-body {
+        padding: 16px;
+      }
+
+      .details h3 {
+        font-size: 1.55rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding: 8px;
+      }
+
+      .hero {
+        border-radius: 20px;
+      }
+
+      .hero::after {
+        width: 64px;
+        height: 64px;
+        right: 18px;
+        top: 18px;
+      }
+
+      .hero-copy {
+        font-size: 0.96rem;
+      }
+
+      .panel {
+        border-radius: 20px;
+      }
+
+      .calendar-wrap {
+        padding: 12px;
+      }
+
+      .weekday {
+        font-size: 0.7rem;
+      }
+
+      .calendar-grid {
+        gap: 6px;
+      }
+
+      .day-card {
+        min-height: 70px;
+        border-radius: 12px;
+      }
+
+      .day-number {
+        font-size: 0.98rem;
+      }
+
+      .day-count {
+        font-size: 0.76rem;
+      }
+
+      .day-tag {
+        display: none;
+      }
+
+      .details h3 {
+        font-size: 1.35rem;
+      }
+
+      .event-card {
+        border-radius: 14px;
+        padding: 14px;
+      }
+
+      .event-title {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-topline">
+        <span class="dot"></span>
+        Coastal Planner
+      </div>
+      <h1>What’s On</h1>
+      <p class="hero-copy">
+        Pick a month, tap a day, and explore what’s happening. This demo is pre-filled with sample events so you can test the full experience straight away.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Choose a month</h2>
+          <select id="monthSelect" class="month-select" aria-label="Choose month"></select>
+        </div>
+
+        <div class="calendar-wrap">
+          <p class="month-label" id="monthLabel"></p>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+      </div>
+
+      <div class="panel details">
+        <div class="panel-head">
+          <h2 class="panel-title">What’s happening</h2>
+        </div>
+
+        <div class="details-body">
+          <div class="selected-date" id="selectedDatePill">
+            <span class="sun"></span>
+            <span id="selectedDateText">Select a day</span>
+          </div>
+
+          <h3 id="detailsHeading">Choose a date to see events</h3>
+          <p class="details-intro" id="detailsIntro">
+            Click any highlighted day in the calendar and the day’s activities will appear here.
+          </p>
+
+          <div class="events-list" id="eventsList"></div>
+
+          <div class="empty-state" id="emptyState">
+            Nothing selected yet. Try one of the highlighted dates with a “What’s On” tag to preview the interaction.
+          </div>
+
+          <div class="footer-wave" aria-hidden="true">
+            <div class="deep"></div>
+            <div class="mid"></div>
+            <div class="front"></div>
+            <div class="sand"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const eventData = {
+      "2026-01": {
+        "5": [
+          {
+            time: "10:00 AM",
+            title: "Seafront Coffee Morning",
+            copy: "A relaxed social start to the day with coffee, pastries and a welcome chat in the lounge."
+          },
+          {
+            time: "7:30 PM",
+            title: "Live Vocal Duo",
+            copy: "An easygoing evening set with coastal classics, singalong favourites and a sunny holiday atmosphere."
+          }
+        ],
+        "12": [
+          {
+            time: "2:00 PM",
+            title: "Guided Promenade Walk",
+            copy: "A gentle afternoon stroll along the seafront with time to stop, chat and take in the views."
+          }
+        ],
+        "18": [
+          {
+            time: "11:00 AM",
+            title: "Craft & Gift Market",
+            copy: "Browse local makers, handmade gifts and seaside-inspired pieces in a bright indoor market setting."
+          },
+          {
+            time: "8:00 PM",
+            title: "Ballroom & Sequence Evening",
+            copy: "A polished social evening for guests who enjoy classic dance-floor favourites."
+          }
+        ],
+        "26": [
+          {
+            time: "1:00 PM",
+            title: "Winter Garden Quiz",
+            copy: "A light-hearted daytime quiz with teams, prizes and plenty of laughs."
+          }
+        ]
+      },
+      "2026-02": {
+        "3": [
+          {
+            time: "3:00 PM",
+            title: "Cream Tea Social",
+            copy: "Fresh scones, sea views and a laid-back afternoon gathering."
+          }
+        ],
+        "9": [
+          {
+            time: "10:30 AM",
+            title: "Photography Walk",
+            copy: "A scenic photo walk focused on shoreline views, village details and coastal light."
+          },
+          {
+            time: "7:45 PM",
+            title: "Cabaret Night",
+            copy: "An upbeat cabaret-style evening with sparkle, humour and crowd-pleasing entertainment."
+          }
+        ],
+        "14": [
+          {
+            time: "6:30 PM",
+            title: "Valentine’s Dinner Special",
+            copy: "A themed evening menu followed by music and dancing."
+          }
+        ],
+        "22": [
+          {
+            time: "2:30 PM",
+            title: "Indoor Games Challenge",
+            copy: "A fun afternoon with table tennis, snooker and easygoing friendly competition."
+          }
+        ]
+      },
+      "2026-03": {
+        "4": [
+          {
+            time: "11:00 AM",
+            title: "Spring Seaside Talk",
+            copy: "A cheerful talk on local coastal life, island highlights and places to discover."
+          }
+        ],
+        "8": [
+          {
+            time: "7:30 PM",
+            title: "Tribute Showtime",
+            copy: "A lively headline entertainment evening with familiar songs and a big-show feel."
+          }
+        ],
+        "16": [
+          {
+            time: "2:00 PM",
+            title: "Promenade Treasure Trail",
+            copy: "A playful afternoon activity with clues, hidden details and a seaside twist."
+          },
+          {
+            time: "8:15 PM",
+            title: "Comedy Spot",
+            copy: "A warm, upbeat comedy set designed for a holiday crowd."
+          }
+        ],
+        "28": [
+          {
+            time: "12:00 PM",
+            title: "Local Produce Tasting",
+            copy: "Sample regional treats and discover flavours inspired by the coast and countryside."
+          }
+        ]
+      },
+      "2026-04": {
+        "6": [
+          {
+            time: "10:00 AM",
+            title: "Easter Seaside Brunch",
+            copy: "A bright seasonal brunch with a coastal holiday feel and springtime favourites."
+          }
+        ],
+        "11": [
+          {
+            time: "3:00 PM",
+            title: "Garden Terrace Music",
+            copy: "Live daytime music on the terrace with sea air, drinks and an easy afternoon mood."
+          }
+        ],
+        "18": [
+          {
+            time: "8:00 PM",
+            title: "Swing & Dance Night",
+            copy: "An evening of polished entertainment with classic tunes and a little sparkle."
+          }
+        ],
+        "25": [
+          {
+            time: "1:30 PM",
+            title: "Island Explorer Talk",
+            copy: "A relaxed guide to nearby highlights, scenic spots and ideas for a rewarding day out."
+          }
+        ]
+      },
+      "2026-05": {
+        "2": [
+          {
+            time: "11:00 AM",
+            title: "Sun Terrace Brunch",
+            copy: "A fresh coastal brunch with bright flavours and a sociable holiday atmosphere."
+          }
+        ],
+        "10": [
+          {
+            time: "2:00 PM",
+            title: "Seaside Sketch Session",
+            copy: "A gentle creative session inspired by sea views, village details and holiday light."
+          }
+        ],
+        "17": [
+          {
+            time: "7:30 PM",
+            title: "West End Style Evening",
+            copy: "A theatrical entertainment night with familiar favourites and a polished live feel."
+          }
+        ],
+        "24": [
+          {
+            time: "12:30 PM",
+            title: "Coastal Picnic Meet-Up",
+            copy: "A cheerful social gathering with snacks, stories and a relaxed outdoor setting."
+          },
+          {
+            time: "8:00 PM",
+            title: "Late Bar Lounge Set",
+            copy: "A smooth, easy evening soundtrack with live vocals and a seaside holiday mood."
+          }
+        ]
+      },
+      "2026-06": {
+        "1": [
+          {
+            time: "10:30 AM",
+            title: "Morning Sea Air Walk",
+            copy: "A breezy group walk along the waterfront with easy pace and beautiful views."
+          }
+        ],
+        "7": [
+          {
+            time: "3:00 PM",
+            title: "Afternoon Jazz on the Terrace",
+            copy: "A laid-back jazz session with sunshine, sea air and a summery feel."
+          }
+        ],
+        "14": [
+          {
+            time: "7:45 PM",
+            title: "Summer Party Night",
+            copy: "A bright, lively evening of entertainment, dancing and holiday favourites."
+          }
+        ],
+        "21": [
+          {
+            time: "1:00 PM",
+            title: "Coastal Food Pop-Up",
+            copy: "A casual tasting event with seasonal bites and seaside flavours."
+          }
+        ],
+        "29": [
+          {
+            time: "8:00 PM",
+            title: "Sunset Classics",
+            copy: "An evening music set designed to feel elegant, warm and easy to enjoy."
+          }
+        ]
+      }
+    };
+
+    const monthNames = [
+      "January 2026",
+      "February 2026",
+      "March 2026",
+      "April 2026",
+      "May 2026",
+      "June 2026"
+    ];
+
+    const monthKeys = [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06"
+    ];
+
+    const weekdayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    const monthSelect = document.getElementById("monthSelect");
+    const monthLabel = document.getElementById("monthLabel");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const selectedDateText = document.getElementById("selectedDateText");
+    const detailsHeading = document.getElementById("detailsHeading");
+    const detailsIntro = document.getElementById("detailsIntro");
+    const eventsList = document.getElementById("eventsList");
+    const emptyState = document.getElementById("emptyState");
+
+    let currentMonth = monthKeys[0];
+    let selectedDay = null;
+
+    function buildMonthOptions() {
+      monthKeys.forEach((key, index) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = monthNames[index];
+        monthSelect.appendChild(option);
+      });
+      monthSelect.value = currentMonth;
+    }
+
+    function getDaysInMonth(monthKey) {
+      const [year, month] = monthKey.split("-").map(Number);
+      return new Date(year, month, 0).getDate();
+    }
+
+    function getFirstWeekdayOffset(monthKey) {
+      const [year, month] = monthKey.split("-").map(Number);
+      const jsDay = new Date(year, month - 1, 1).getDay();
+      return jsDay === 0 ? 6 : jsDay - 1;
+    }
+
+    function clearChildren(node) {
+      while (node.firstChild) node.removeChild(node.firstChild);
+    }
+
+    function renderCalendar() {
+      clearChildren(calendarGrid);
+
+      weekdayLabels.forEach(label => {
+        const wd = document.createElement("div");
+        wd.className = "weekday";
+        wd.textContent = label;
+        calendarGrid.appendChild(wd);
+      });
+
+      const days = getDaysInMonth(currentMonth);
+      const offset = getFirstWeekdayOffset(currentMonth);
+      const eventsForMonth = eventData[currentMonth] || {};
+
+      for (let i = 0; i < offset; i++) {
+        const empty = document.createElement("div");
+        empty.className = "day-card empty";
+        calendarGrid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= days; day++) {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "day-card";
+        if (eventsForMonth[String(day)]) {
+          card.classList.add("has-events");
+        }
+        if (selectedDay === day) {
+          card.classList.add("selected");
+        }
+
+        const number = document.createElement("div");
+        number.className = "day-number";
+        number.textContent = day;
+
+        card.appendChild(number);
+
+        if (eventsForMonth[String(day)]) {
+          const tag = document.createElement("div");
+          tag.className = "day-tag";
+          tag.textContent = "What’s On";
+          card.appendChild(tag);
+
+          const count = document.createElement("div");
+          count.className = "day-count";
+          count.textContent = `${eventsForMonth[String(day)].length} event${eventsForMonth[String(day)].length > 1 ? "s" : ""}`;
+          card.appendChild(count);
+        } else {
+          const count = document.createElement("div");
+          count.className = "day-count";
+          count.textContent = "No listings";
+          card.appendChild(count);
+        }
+
+        card.addEventListener("click", () => {
+          selectedDay = day;
+          renderCalendar();
+          renderDetails();
+        });
+
+        calendarGrid.appendChild(card);
+      }
+
+      const monthIndex = monthKeys.indexOf(currentMonth);
+      monthLabel.textContent = monthNames[monthIndex];
+    }
+
+    function renderDetails() {
+      clearChildren(eventsList);
+
+      if (!selectedDay) {
+        selectedDateText.textContent = "Select a day";
+        detailsHeading.textContent = "Choose a date to see events";
+        detailsIntro.textContent = "Click any highlighted day in the calendar and the day’s activities will appear here.";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      const eventsForMonth = eventData[currentMonth] || {};
+      const events = eventsForMonth[String(selectedDay)] || [];
+      const monthName = monthNames[monthKeys.indexOf(currentMonth)];
+
+      selectedDateText.textContent = `${selectedDay} ${monthName}`;
+      detailsHeading.textContent = events.length ? `${events.length} thing${events.length > 1 ? "s" : ""} on` : "Nothing scheduled";
+      detailsIntro.textContent = events.length
+        ? `Here’s what’s currently listed for ${selectedDay} ${monthName}.`
+        : `There are no events currently listed for ${selectedDay} ${monthName}.`;
+
+      if (!events.length) {
+        emptyState.style.display = "block";
+        emptyState.textContent = "No events are listed for this day yet. Pick another highlighted date to preview the interactive event cards.";
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+      events.forEach(event => {
+        const card = document.createElement("article");
+        card.className = "event-card";
+
+        const time = document.createElement("div");
+        time.className = "event-time";
+        time.textContent = event.time;
+
+        const title = document.createElement("h4");
+        title.className = "event-title";
+        title.textContent = event.title;
+
+        const copy = document.createElement("p");
+        copy.className = "event-copy";
+        copy.textContent = event.copy;
+
+        card.appendChild(time);
+        card.appendChild(title);
+        card.appendChild(copy);
+
+        eventsList.appendChild(card);
+      });
+    }
+
+    monthSelect.addEventListener("change", () => {
+      currentMonth = monthSelect.value;
+      selectedDay = null;
+      renderCalendar();
+      renderDetails();
+    });
+
+    buildMonthOptions();
+    renderCalendar();
+    renderDetails();
+  </script>
+</body>
+</html>
