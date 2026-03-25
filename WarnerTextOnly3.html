@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Warner Norton Grange</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --surface-soft:#f7fbfd;
+  --surface-softer:#fbfdff;
+  --text:#1f2b38;
+  --muted:#5d6d7c;
+  --heading:#183047;
+  --accent:#2f74d8;
+  --accent2:#1fb7c9;
+  --accent3:#59c9b0;
+  --border:#e5edf3;
+  --shadow:0 12px 30px rgba(22,52,80,0.07);
+  --radius:24px;
+  --note-bg:#fbf4ea;
+  --note-border:#e8d6b9;
+  --note-text:#7a592a;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+body{
+  background:
+    linear-gradient(180deg,#ffffff 0%,#fcfeff 100%);
+}
+
+.wrap{
+  max-width:1000px;
+  margin:0 auto;
+  padding:18px;
+}
+
+.card{
+  background:linear-gradient(180deg,var(--surface) 0%, var(--surface-soft) 100%);
+  border:1px solid var(--border);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top{
+  height:7px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+}
+
+.inner{
+  padding:32px;
+}
+
+.hero{
+  margin-bottom:18px;
+}
+
+h1{
+  margin:0 0 10px;
+  font-size:clamp(2.1rem,4vw,3.15rem);
+  line-height:1.02;
+  letter-spacing:-0.035em;
+  color:var(--heading);
+  background:linear-gradient(90deg,#173149 0%, var(--accent) 55%, var(--accent2) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.price{
+  display:block;
+  font-size:1.45rem;
+  font-weight:700;
+  color:#21476d;
+  margin-bottom:14px;
+}
+
+.tag{
+  display:inline-block;
+  padding:9px 14px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#eef8fc,#f7fbfd);
+  border:1px solid #dcecf3;
+  color:#31506b;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+.section{
+  margin-top:30px;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.section-head .line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,rgba(47,116,216,.18),rgba(31,183,201,.12),transparent);
+}
+
+h2{
+  margin:0;
+  font-size:1.55rem;
+  line-height:1.15;
+  color:#203346;
+  letter-spacing:-0.02em;
+  white-space:nowrap;
+}
+
+p{
+  margin:0 0 14px;
+  color:var(--muted);
+  line-height:1.72;
+  font-size:1rem;
+}
+
+ul.clean{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  gap:10px;
+}
+
+ul.clean li{
+  position:relative;
+  padding:12px 14px 12px 42px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  color:#344555;
+  line-height:1.45;
+  box-shadow:0 3px 10px rgba(0,0,0,0.02);
+}
+
+ul.clean li::before{
+  content:"•";
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-52%);
+  font-size:22px;
+  line-height:1;
+  color:var(--accent2);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.box{
+  background:linear-gradient(180deg,#ffffff 0%,var(--surface-softer) 100%);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 6px 18px rgba(22,52,80,0.04);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.box:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 30px rgba(47,116,216,0.08);
+  border-color:#d8e8f1;
+}
+
+.box strong{
+  display:block;
+  margin-bottom:8px;
+  color:#1f3348;
+  font-size:1rem;
+  line-height:1.35;
+}
+
+.box p{
+  margin:0;
+  font-size:.97rem;
+  line-height:1.68;
+}
+
+.split{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:18px;
+  align-items:start;
+}
+
+.note{
+  margin-top:18px;
+  padding:16px 18px;
+  border-radius:18px;
+  background:linear-gradient(180deg,var(--note-bg),#f8eedf);
+  border:1px solid var(--note-border);
+  color:var(--note-text);
+  line-height:1.65;
+  font-size:.96rem;
+}
+
+/* shoreline */
+.coastline{
+  position:relative;
+  margin-top:24px;
+  height:86px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid #dbeaf1;
+  background:
+    linear-gradient(180deg,#eef8fc 0%, #d8eef7 55%, #bde0ef 100%);
+}
+
+.coastline .deep{
+  position:absolute;
+  inset:auto 0 18px 0;
+  height:34px;
+  background:
+    radial-gradient(26px 13px at 26px 18px, rgba(25,95,175,.35) 98%, transparent 100%) 0 0/78px 22px repeat-x,
+    radial-gradient(26px 13px at 60px 8px, rgba(18,80,155,.24) 98%, transparent 100%) 0 0/78px 22px repeat-x,
+    linear-gradient(180deg, rgba(35,113,196,.14), rgba(16,76,149,.28));
+  animation: driftDeep 11s linear infinite;
+}
+
+.coastline .mid{
+  position:absolute;
+  inset:auto 0 10px 0;
+  height:26px;
+  background:
+    radial-gradient(22px 10px at 22px 14px, rgba(42,150,210,.34) 98%, transparent 100%) 0 0/64px 18px repeat-x,
+    radial-gradient(22px 10px at 48px 6px, rgba(30,190,205,.26) 98%, transparent 100%) 0 0/64px 18px repeat-x;
+  animation: driftMid 8s linear infinite;
+}
+
+.coastline .shore{
+  position:absolute;
+  inset:auto 0 6px 0;
+  height:18px;
+  background:
+    radial-gradient(18px 8px at 18px 11px, rgba(120,225,232,.45) 98%, transparent 100%) 0 0/50px 14px repeat-x,
+    radial-gradient(18px 8px at 42px 5px, rgba(88,205,218,.30) 98%, transparent 100%) 0 0/50px 14px repeat-x;
+  animation: driftShore 6s linear infinite;
+}
+
+.coastline .foam{
+  position:absolute;
+  inset:auto 0 12px 0;
+  height:10px;
+  background:
+    radial-gradient(circle at 8px 5px, rgba(255,255,255,.96) 0 3px, transparent 3px) 0 0/24px 10px repeat-x,
+    radial-gradient(circle at 18px 3px, rgba(255,255,255,.60) 0 2px, transparent 2px) 0 0/24px 10px repeat-x;
+  opacity:.85;
+  animation: driftFoam 7s linear infinite;
+}
+
+.coastline .sand{
+  position:absolute;
+  inset:auto 0 0 0;
+  height:14px;
+  background:linear-gradient(180deg,#efd6a5 0%, #e5c589 100%);
+  border-top:1px solid rgba(197,160,105,.35);
+}
+
+.coastline .shine{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0) 42%,
+    rgba(255,255,255,.18) 50%,
+    rgba(255,255,255,0) 58%,
+    rgba(255,255,255,0) 100%);
+  transform:translateX(-120%);
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+@keyframes driftDeep{
+  from{transform:translateX(0)}
+  to{transform:translateX(78px)}
+}
+@keyframes driftMid{
+  from{transform:translateX(0)}
+  to{transform:translateX(64px)}
+}
+@keyframes driftShore{
+  from{transform:translateX(0)}
+  to{transform:translateX(50px)}
+}
+@keyframes driftFoam{
+  from{transform:translateX(0)}
+  to{transform:translateX(24px)}
+}
+@keyframes shimmer{
+  0%{transform:translateX(-120%)}
+  55%{transform:translateX(120%)}
+  100%{transform:translateX(120%)}
+}
+
+@media (max-width:820px){
+  .inner{
+    padding:24px;
+  }
+
+  .grid,
+  .split{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:560px){
+  .wrap{
+    padding:8px;
+  }
+
+  .inner{
+    padding:18px;
+  }
+
+  h1{
+    font-size:2.15rem;
+  }
+
+  .price{
+    font-size:1.25rem;
+  }
+
+  h2{
+    font-size:1.35rem;
+    white-space:normal;
+  }
+
+  .section{
+    margin-top:24px;
+  }
+
+  .box{
+    padding:15px;
+  }
+
+  ul.clean li{
+    padding:11px 12px 11px 38px;
+  }
+
+  .coastline{
+    height:72px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="top"></div>
+
+    <div class="inner">
+      <div class="hero">
+        <h1>Warner Hotels by Coach - Norton Grange on the Isle of Wight</h1>
+        <span class="price">5 Days from just £429.99</span>
+        <span class="tag">A Premier Warner Coach Holiday</span>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>The Fabulous Isle of Wight</h2>
+          <div class="line"></div>
+        </div>
+
+        <ul class="clean">
+          <li>Adults Only Coastal Village</li>
+          <li>All Coach Travel &amp; Ferry Crossings</li>
+          <li>Dinner, Bed and Breakfast</li>
+          <li>A FULL Excursion Programme</li>
+          <li>Nightly Entertainment</li>
+          <li>Great Leisure Facilities</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Excursions Include</h2>
+          <div class="line"></div>
+        </div>
+
+        <div class="grid">
+          <div class="box">
+            <strong>THE NEEDLES at Alum Bay</strong>
+            <p>A tour along the South Coast, calling into Isle of Wight Pearl and on to the Needles at Alum Bay. Needles Park has a chairlift to the beach (ticket price not included), from which you can see the famous coloured sands, Needles rocks and lighthouse. We continue on through Freshwater to Yarmouth with its castle built by King Henry VIII (entrance not included).</p>
+          </div>
+
+          <div class="box">
+            <strong>SHANKLIN</strong>
+            <p>Enjoy a short coach tour to Shanklin, one of the oldest resorts on the island, famous for its natural springs. Shanklin Old Village boasts picturesque craft and gift shop cottages clustered around the thatched Crab Inn. Shanklin’s public parks and gardens are a delight to visit. Tower Gardens and Rylstone Gardens run alongside the Chine (a dramatic fissure in the rock where a 45 ft waterfall cascades through boulders and ferns to the shore).</p>
+          </div>
+
+          <div class="box">
+            <strong>NEWPORT and GODSHILL</strong>
+            <p>Newport offers lots to see; excellent shopping, ancient inns, the harbour, Carrisbrook Village.</p>
+            <p>Returning, we call into the island’s most picturesque village, Godshill, with its thatched cottages and hill-top church - an ideal stop for a cream tea.</p>
+          </div>
+
+          <div class="box">
+            <strong>Optional Coach Tour to OSBORNE HOUSE</strong>
+            <p>The magnificent Osborne House, holiday home of Queen Victoria, preserved much as it was when the Queen died there in 1901. (entrance approx £25)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>PREMIER CHALETS</h2>
+          <div class="line"></div>
+        </div>
+
+        <p>Premier Chalets - many with The NEW Signature Experience Unique to Warner, provide you with an elegant and contemporary environment perfect for that special break away. As well as a lovely chalet and fresh en suite bathroom, these rooms provide large chairs in which to curl up and enjoy that book you’ve been keeping especially for your holiday. Lots of extra touches for the perfect stay.</p>
+
+        <ul class="clean">
+          <li>A stocked tea tray with fresh milk</li>
+          <li>One bottle of still and one bottle of sparkling water</li>
+          <li>Frobisher’s fruit juices • Sweet and savoury nibbles</li>
+          <li>A wonderfully comfortable bed with a duo of soft and firm pillows</li>
+          <li>A cosy, soft lightweight duvet and a super soft blanket</li>
+          <li>A deep-filled mattress topper</li>
+          <li>Fluffy white robes to use during your stay</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Warner's Norton Grange</h2>
+          <div class="line"></div>
+        </div>
+
+        <p>Coastal Village on the Isle of Wight</p>
+
+        <p>Literally yards away from the Solent, the views and the coastal walks are spectacular. The ‘Waterfront Lounge and Terrace’ is the perfect spot to soak up the sun and watch the world sail by.</p>
+
+        <p>Try your hand on the pitch and putt course, head to the indoor games room with the snooker and table tennis, or give archery and rifle shooting a go.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>*Facilities include;</h2>
+          <div class="line"></div>
+        </div>
+
+        <div class="split">
+          <ul class="clean">
+            <li>Heated Indoor Pool</li>
+            <li>Sauna &amp; Gym</li>
+            <li>Air Rifle Shooting and Archery</li>
+          </ul>
+
+          <ul class="clean">
+            <li>Pitch &amp; Putt and fun Croquet</li>
+            <li>Fitness Classes</li>
+            <li>Free WIFI in public areas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        Please note: All purchases at the hotel are card only, no cash is accepted *Some resort activities may be chargeable, guests will need to pay for them directly at the resort.
+      </div>
+
+      <div class="coastline" aria-hidden="true">
+        <div class="deep"></div>
+        <div class="mid"></div>
+        <div class="shore"></div>
+        <div class="foam"></div>
+        <div class="sand"></div>
+        <div class="shine"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
