@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Warner Norton Grange</title>
+
+<style>
+:root{
+  --text:#1f2b38;
+  --muted:#5f6e7c;
+  --accent:#2f74d8;
+  --accent2:#1fb7c9;
+  --border:#e6edf3;
+  --shadow:0 16px 40px rgba(25,56,85,0.08);
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#ffffff;
+  color:var(--text);
+}
+
+.wrap{
+  max-width:1000px;
+  margin:0 auto;
+  padding:18px;
+}
+
+.card{
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.top{
+  height:8px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+
+.inner{
+  padding:30px;
+}
+
+h1{
+  margin:0 0 8px;
+  font-size:clamp(2rem,4vw,3rem);
+  line-height:1.08;
+  background:linear-gradient(90deg,#1f2b38,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.price{
+  font-size:1.4rem;
+  font-weight:bold;
+  margin-bottom:14px;
+}
+
+.tag{
+  display:inline-block;
+  background:#eef7fb;
+  border:1px solid #dbeef4;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+.section{
+  margin-top:26px;
+}
+
+.section h2{
+  font-size:1.5rem;
+  margin:0 0 10px;
+  line-height:1.15;
+}
+
+.section p{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 12px;
+}
+
+ul{
+  padding-left:18px;
+  margin:0;
+}
+
+li{
+  margin-bottom:8px;
+  line-height:1.55;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.box{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.box:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 28px rgba(47,116,216,0.12);
+}
+
+.box strong{
+  display:block;
+  margin-bottom:8px;
+}
+
+.box p{
+  margin:0;
+}
+
+.note{
+  margin-top:18px;
+  padding:14px;
+  background:#fbf4ea;
+  border:1px solid #ead8bc;
+  border-radius:14px;
+  font-size:.95rem;
+  line-height:1.6;
+}
+
+/* 🌊 COASTLINE */
+.coastline{
+  position:relative;
+  margin-top:24px;
+  height:120px;
+  border-radius:22px;
+  overflow:hidden;
+  background:linear-gradient(to bottom,#f8fcfe 0%, #edf8fc 45%, #d7eef8 100%);
+  border:1px solid #e3edf3;
+}
+
+/* darkest back water */
+.water-back{
+  position:absolute;
+  left:-10%;
+  width:130%;
+  bottom:34px;
+  height:42px;
+  background:
+    radial-gradient(22px 16px at 20px 16px, rgba(22,76,152,0.42) 98%, transparent 100%) 0 0/70px 22px repeat-x,
+    radial-gradient(22px 16px at 54px 8px, rgba(34,95,181,0.34) 98%, transparent 100%) 0 0/70px 22px repeat-x,
+    linear-gradient(to bottom, rgba(34,95,181,0.22), rgba(17,65,139,0.34));
+  animation:waterBackMove 16s ease-in-out infinite;
+  opacity:.95;
+}
+
+/* middle water */
+.water-mid{
+  position:absolute;
+  left:-10%;
+  width:130%;
+  bottom:20px;
+  height:34px;
+  background:
+    radial-gradient(20px 14px at 18px 14px, rgba(29,125,202,0.34) 98%, transparent 100%) 0 0/64px 20px repeat-x,
+    radial-gradient(20px 14px at 48px 7px, rgba(31,183,201,0.25) 98%, transparent 100%) 0 0/64px 20px repeat-x;
+  animation:waterMidMove 11s ease-in-out infinite;
+  opacity:.92;
+}
+
+/* front water touching the beach */
+.water-front{
+  position:absolute;
+  left:-10%;
+  width:130%;
+  bottom:10px;
+  height:26px;
+  background:
+    radial-gradient(18px 12px at 16px 12px, rgba(86,207,220,0.34) 98%, transparent 100%) 0 0/54px 18px repeat-x,
+    radial-gradient(18px 12px at 42px 5px, rgba(120,226,230,0.26) 98%, transparent 100%) 0 0/54px 18px repeat-x;
+  animation:waterFrontMove 8s ease-in-out infinite;
+  opacity:.95;
+}
+
+/* emoji wave accents */
+.wave-layer{
+  position:absolute;
+  left:-10%;
+  width:140%;
+  white-space:nowrap;
+  font-size:20px;
+  letter-spacing:8px;
+  line-height:1;
+  user-select:none;
+}
+
+.wave-back{
+  bottom:52px;
+  opacity:0.28;
+  animation:waveBack 15s ease-in-out infinite;
+}
+
+.wave-front{
+  bottom:28px;
+  opacity:0.68;
+  animation:waveFront 9s ease-in-out infinite;
+}
+
+.wave-shore{
+  bottom:12px;
+  opacity:0.82;
+  font-size:17px;
+  letter-spacing:6px;
+  animation:waveShore 7s ease-in-out infinite;
+}
+
+/* foam */
+.foam{
+  position:absolute;
+  bottom:18px;
+  width:120%;
+  left:-10%;
+  height:18px;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.95) 4px, transparent 5px) repeat,
+    radial-gradient(circle, rgba(255,255,255,0.6) 3px, transparent 4px) repeat;
+  background-size:30px 18px, 22px 14px;
+  background-position:0 0, 8px 5px;
+  opacity:0.75;
+  animation:foamMove 9s linear infinite;
+}
+
+/* sand beach */
+.beach{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:18px;
+  background:
+    linear-gradient(to bottom, #f6dfb4 0%, #efd09b 65%, #e6c28c 100%);
+  border-top:1px solid rgba(214, 181, 125, 0.45);
+}
+
+.beach::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:6px;
+  background:
+    radial-gradient(circle at 12px 3px, rgba(255,255,255,0.45) 0 2px, transparent 2px) 0 0/32px 6px repeat-x;
+  opacity:0.55;
+}
+
+/* shimmer */
+.shimmer{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    105deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0) 35%,
+    rgba(255,255,255,0.20) 48%,
+    rgba(255,255,255,0) 60%,
+    rgba(255,255,255,0) 100%
+  );
+  transform:translateX(-120%);
+  animation:shimmerSweep 8s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* ANIMATIONS */
+@keyframes waterBackMove{
+  0%{ transform:translateX(-6%) scaleY(1); }
+  50%{ transform:translateX(1%) scaleY(1.05); }
+  100%{ transform:translateX(6%) scaleY(1); }
+}
+
+@keyframes waterMidMove{
+  0%{ transform:translateX(-4%) scaleY(1); }
+  50%{ transform:translateX(4%) scaleY(1.08); }
+  100%{ transform:translateX(10%) scaleY(1); }
+}
+
+@keyframes waterFrontMove{
+  0%{ transform:translateX(-3%) scaleY(1); }
+  50%{ transform:translateX(6%) scaleY(1.1); }
+  100%{ transform:translateX(12%) scaleY(1); }
+}
+
+@keyframes waveFront{
+  0%{transform:translateX(-5%) translateY(0);}
+  50%{transform:translateX(5%) translateY(-2px);}
+  100%{transform:translateX(10%) translateY(0);}
+}
+
+@keyframes waveBack{
+  0%{transform:translateX(-8%) translateY(0);}
+  50%{transform:translateX(2%) translateY(-1px);}
+  100%{transform:translateX(8%) translateY(0);}
+}
+
+@keyframes waveShore{
+  0%{transform:translateX(-2%) translateY(0);}
+  50%{transform:translateX(7%) translateY(-1px);}
+  100%{transform:translateX(13%) translateY(0);}
+}
+
+@keyframes foamMove{
+  from{transform:translateX(0);}
+  to{transform:translateX(60px);}
+}
+
+@keyframes shimmerSweep{
+  0%{transform:translateX(-120%);}
+  55%{transform:translateX(120%);}
+  100%{transform:translateX(120%);}
+}
+
+@media(max-width:700px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .inner{
+    padding:20px;
+  }
+
+  .coastline{
+    height:100px;
+  }
+
+  .wave-layer{
+    font-size:16px;
+    letter-spacing:6px;
+  }
+
+  .wave-back{
+    bottom:44px;
+  }
+
+  .wave-front{
+    bottom:24px;
+  }
+
+  .wave-shore{
+    bottom:10px;
+    font-size:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="card">
+<div class="top"></div>
+
+<div class="inner">
+
+<h1>Warner Hotels by Coach - Norton Grange on the Isle of Wight</h1>
+
+<div class="price">5 Days from just £429.99</div>
+
+<div class="tag">A Premier Warner Coach Holiday</div>
+
+<div class="section">
+<h2>The Fabulous Isle of Wight</h2>
+<ul>
+<li>Adults Only Coastal Village</li>
+<li>All Coach Travel &amp; Ferry Crossings</li>
+<li>Dinner, Bed and Breakfast</li>
+<li>A FULL Excursion Programme</li>
+<li>Nightly Entertainment</li>
+<li>Great Leisure Facilities</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>Excursions Include</h2>
+
+<div class="grid">
+
+<div class="box">
+<strong>THE NEEDLES at Alum Bay</strong>
+<p>A tour along the South Coast, calling into Isle of Wight Pearl and on to the Needles at Alum Bay. Needles Park has a chairlift to the beach (ticket price not included), from which you can see the famous coloured sands, Needles rocks and lighthouse. We continue on through Freshwater to Yarmouth with its castle built by King Henry VIII (entrance not included).</p>
+</div>
+
+<div class="box">
+<strong>SHANKLIN</strong>
+<p>Enjoy a short coach tour to Shanklin, one of the oldest resorts on the island, famous for its natural springs.</p>
+</div>
+
+<div class="box">
+<strong>NEWPORT and GODSHILL</strong>
+<p>Newport offers lots to see; excellent shopping, ancient inns, the harbour.</p>
+</div>
+
+<div class="box">
+<strong>Optional Coach Tour to OSBORNE HOUSE</strong>
+<p>The magnificent Osborne House, holiday home of Queen Victoria.</p>
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>PREMIER CHALETS</h2>
+<ul>
+<li>A stocked tea tray with fresh milk</li>
+<li>One bottle of still and one bottle of sparkling water</li>
+<li>Sweet and savoury nibbles</li>
+<li>A wonderfully comfortable bed</li>
+<li>A cosy duvet and blanket</li>
+<li>A deep-filled mattress topper</li>
+<li>Fluffy white robes</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>Warner's Norton Grange</h2>
+<p>Coastal Village on the Isle of Wight</p>
+<p>Literally yards away from the Solent, the views and the coastal walks are spectacular.</p>
+</div>
+
+<div class="section">
+<h2>*Facilities include;</h2>
+<ul>
+<li>Heated Indoor Pool</li>
+<li>Sauna &amp; Gym</li>
+<li>Air Rifle Shooting and Archery</li>
+<li>Pitch &amp; Putt and fun Croquet</li>
+<li>Fitness Classes</li>
+<li>Free WIFI in public areas</li>
+</ul>
+</div>
+
+<div class="note">
+Please note: All purchases at the hotel are card only, no cash is accepted.
+</div>
+
+<div class="coastline">
+  <div class="water-back"></div>
+  <div class="water-mid"></div>
+  <div class="water-front"></div>
+
+  <div class="wave-layer wave-back">🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊</div>
+  <div class="wave-layer wave-front">🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊</div>
+  <div class="wave-layer wave-shore">🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊 🌊</div>
+
+  <div class="foam"></div>
+  <div class="beach"></div>
+  <div class="shimmer"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
